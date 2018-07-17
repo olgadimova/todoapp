@@ -73,8 +73,8 @@
             <TextAreaField name = "description" value = {this.state.description}
              handler = {this.handleChange} label = "Description: " />
             <PriorityField name = "priority" value = {this.state.priority} 
-            handler = {this.handleChange} label = "Priority: "/>
-            <button onClick = {() => this.addTask()}>Submit</button>
+            handler = {this.handleChange} label = "Priority (starting from 1; 1 - most important, 2 - less important etc.): "/>
+            <button onClick = {() => this.addTask()}>Submit</button> 
             </form>
             </div>
         )}
@@ -97,7 +97,8 @@
             height: 23,
             margin: 0,
             backgroundColor: "#eee",
-            color: "red"
+            color: "red",
+            border: 0
 
         }
         return (
@@ -178,18 +179,25 @@
           this.state = {tasks: []}
           this.addTask = this.addTask.bind(this)
           this.deleteTask = this.deleteTask.bind(this)
+          
       }
+
       addTask(task) {
         event.preventDefault();
         const tasksCopy = this.state.tasks.slice();
         tasksCopy.push(task);
-        this.setState({tasks: tasksCopy})
+        tasksCopy.sort((a,b) => {
+            return a.priority - b.priority
+        })
+        this.setState({tasks:tasksCopy})
       }
+
       deleteTask(index) {
         const tasksCopy = this.state.tasks.slice();
         tasksCopy.splice(index, 1);
         this.setState({tasks: tasksCopy})
       }
+
         render() {
             return (
                 <div id = "main">

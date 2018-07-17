@@ -41,18 +41,20 @@ body {
 #main h2 {
     font-family: 'Indie Flower', cursive;
     text-align: center;
+    margin-top: 10px;
     margin-bottom: 0;
 }
 
 form {
     box-sizing: border-box;
-    height: 140px;
-    margin: 20px 10px 20px 10px;
+    height: 170px;
+    margin: 10px 10px 20px 10px;
 }
 
 
 #fullform {
-    max-height: 140px;
+    max-height: 170px;
+
 }
 
 form input {
@@ -85,17 +87,20 @@ table {
     padding: 0px;
     overflow: hidden;
     text-overflow: ellipsis;
+    border: 1px solid black;
     
 }
 
 #delete {
     border-right: 1px solid black;
-    vertical-align: center;
+    border-left: 0px;
+   
+    vertical-align: middle;
 }
 
 #pri {
   text-align: center;
-
+  border-right: 1px solid black;
 }
 td {
     
