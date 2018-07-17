@@ -45,7 +45,8 @@
         )
     }
      
-    
+    // Form Class keeps all form  state.
+
     class Form extends React.Component{
         constructor(props) {
         super(props);
@@ -73,22 +74,15 @@
             <TextAreaField name = "description" value = {this.state.description}
              handler = {this.handleChange} label = "Description: " />
             <PriorityField name = "priority" value = {this.state.priority} 
-            handler = {this.handleChange} label = "Priority (starting from 1; 1 - most important, 2 - less important etc.): "/>
+            handler = {this.handleChange} label = "Priority (number from 1 to 10, where 1 - most important and 10 - least important) : "/>
             <button onClick = {() => this.addTask()}>Submit</button> 
             </form>
             </div>
         )}
     }
-    /* Results fields 
-    function DoneButton(props) {
-       var style = {
-          width: 24,
-          height: 24,
-          margin: 6
-        }
-       return <input type = "checkbox" style = {style}/>
-    }
-*/
+   
+   // Results Class components start from here.
+
     function RemoveButton(props) {
         var style = {
             width: 44,
@@ -173,6 +167,8 @@
             )
         }
     
+    // App manages tasks array items that appear in Results table bbelow the form.
+
     class App extends React.Component {
       constructor(props) {
           super(props);
@@ -185,11 +181,16 @@
       addTask(task) {
         event.preventDefault();
         const tasksCopy = this.state.tasks.slice();
-        tasksCopy.push(task);
+        if(task.priority < 0 || task.priority > 10) {
+            alert("Priority should be a number from 0 to 10.");
+        } else {
+            tasksCopy.push(task);
         tasksCopy.sort((a,b) => {
             return a.priority - b.priority
         })
         this.setState({tasks:tasksCopy})
+        }
+        
       }
 
       deleteTask(index) {
