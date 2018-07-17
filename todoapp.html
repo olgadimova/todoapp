@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Your To-Do List</title>
+    <script src="https://unpkg.com/react@15/dist/react.min.js"></script>
+       <script src="https://unpkg.com/react-dom@15/dist/react-dom.min.js"></script>
+       <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.24.0/babel.js"></script>
+       <link href="https://fonts.googleapis.com/css?family=Indie+Flower" rel="stylesheet">
+       <link href="todoapp.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div id="root"></div>
+    
+
+<script type="text/babel">
+    function InputField(props) {
+     return (
+         <div>
+         <label>{props.label}
+        </label>
+         <input name = {props.name} value = {props.value} onChange = {props.handler} autocomplete = "off" type = "text"/>
+         </div>
+     )
+    }
+    function PriorityField(props) {
+        return (
+         <div>
+         <label>{props.label}
+        </label>
+         <input name = {props.name} value = {props.value} onChange = {props.handler} id = "prior" autocomplete = "off" type = "number" />
+         </div>
+     )
+    }
+    
+    function TextAreaField(props) {
+        return (
+            <div>
+            <label>{props.label}</label> <br/>
+            <textarea name = {props.name} value = {props.value} onChange = {props.handler} type = "text" name = {props.name} autocomplete= "off"></textarea>
+          
+            </div>
+        )
+    }
+     
+    
+    class Form extends React.Component{
+        constructor(props) {
+        super(props);
+        this.state = { task: "", description: "", priority: ""}
+        this.handleChange = this.handleChange.bind(this);
+        }
+        handleChange(event) {
+         this.setState({[event.target.name]: event.target.value})
+        }
+       addTask() {
+         
+         this.props.addTask(this.state);
+         this.reset();
+       }
+       
+       reset() {
+           this.setState({task: "", description: "", priority: ""})
+       }
+        render() {
+        return(
+            <div id = "fullform">
+            <form>
+            <InputField name = "task" value = {this.state.task}
+            handler = {this.handleChange} label = "Task: "/>
+            <TextAreaField name = "description" value = {this.state.description}
+             handler = {this.handleChange} label = "Description: " />
+            <PriorityField name = "priority" value = {this.state.priority} 
+            handler = {this.handleChange} label = "Priority: "/>
+            <button onClick = {() => this.addTask()}>Submit</button>
+            </form>
+            </div>
+        )}
+    }
+    /* Results fields 
+    function DoneButton(props) {
+       var style = {
+          width: 24,
+          height: 24,
+          margin: 6
+        }
+       return <input type = "checkbox" style = {style}/>
+    }
+*/
+    function RemoveButton(props) {
+        var style = {
+            width: 44,
+            paddingLeft: 10,
+            paddingRight: 10,
+            height: 23,
+            margin: 0,
+            backgroundColor: "#eee",
+            color: "red"
+
+        }
+        return (
+            <div>
+            <td id = "delete">
+            <button onClick = {props.deleteTask} style = {style}>X</button>
+            </td>
+            </div>
+        )
+    }
+    function Field(props) {
+        return <th width = {props.width}>{props.text}</th>
+    }
+    function ResultsField(props) {
+        return <td  width = {props.width}>{props.text}</td>
+    }
+    function ResultsHead(props) {
+        var style = {
+            width: 140,
+            padding: 1,
+            textAlign: "center"
+        }
+        return (
+            <div>
+            <tr style = {style}>
+            <Field width = "138" text = "Task"/>
+            <Field width = "150" text = "Description"/>
+            <Field width = "30" text = "Priority"/>
+            <Field width = "44" text = "Delete"/>
+            </tr>
+            </div>
+        )
+    }
+    function ResultsRow (props) {
+        var style = {
+            display: "flex",
+            
+       
+        }
+        return (
+            <div>
+            <tr style = {style}>
+            <ResultsField width = "138" text = {props.task}/>
+            <ResultsField width = "150" text = {props.description}/>
+            <ResultsField width = "55" text = {props.priority}/>
+            <RemoveButton deleteTask = {props.deleteTask}/>
+            </tr>
+            </div>
+        )
+    }
+    function Results(props) {
+        var results = props.tasks.map((task, index) =>
+        <ResultsRow key = {index} 
+        task = {task.task}
+        description = {task.description}
+        priority = {task.priority}
+        deleteTask = {() => props.deleteTask(index)}
+         />
+        )
+            return (
+                <div>
+                <h2>Your To-Do list will appear here:</h2>
+                <table>
+                
+                <ResultsHead/>
+                
+                
+                {results}
+                
+                </table>
+                </div>
+            )
+        }
+    
+    class App extends React.Component {
+      constructor(props) {
+          super(props);
+          this.state = {tasks: []}
+          this.addTask = this.addTask.bind(this)
+          this.deleteTask = this.deleteTask.bind(this)
+      }
+      addTask(task) {
+        event.preventDefault();
+        const tasksCopy = this.state.tasks.slice();
+        tasksCopy.push(task);
+        this.setState({tasks: tasksCopy})
+      }
+      deleteTask(index) {
+        const tasksCopy = this.state.tasks.slice();
+        tasksCopy.splice(index, 1);
+        this.setState({tasks: tasksCopy})
+      }
+        render() {
+            return (
+                <div id = "main">
+               <h1>Here is your To - Do List</h1>
+               <Form addTask = {this.addTask}/>
+               <Results tasks = {this.state.tasks} deleteTask = {this.deleteTask}/>
+               
+                </div>
+            )
+        }
+    }
+ReactDOM.render(
+    <App/>,
+    document.getElementById("root")
+)
+</script>
+
+</body>
+</html>
