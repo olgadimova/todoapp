@@ -30,7 +30,7 @@
          <div>
          <label>{props.label}
         </label>
-         <input name = {props.name} value = {props.value} onChange = {props.handler} id = "prior" autocomplete = "off" type = "number" />
+         <input id = "prior" name = {props.name} value = {props.value} onChange = {props.handler} autocomplete = "off" type = "number" />
          </div>
      )
     }
@@ -112,7 +112,7 @@
         return <th width = {props.width}>{props.text}</th>
     }
     function ResultsField(props) {
-        return <td  width = {props.width}>{props.text}</td>
+        return <td  width = {props.width} id = {props.id}>{props.text}</td>
     }
     function ResultsHead(props) {
         var style = {
@@ -142,7 +142,7 @@
             <tr style = {style}>
             <ResultsField width = "138" text = {props.task}/>
             <ResultsField width = "150" text = {props.description}/>
-            <ResultsField width = "55" text = {props.priority}/>
+            <ResultsField width = "55" text = {props.priority} id = "pri"/>
             <RemoveButton deleteTask = {props.deleteTask}/>
             </tr>
             </div>

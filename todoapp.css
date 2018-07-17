@@ -5,7 +5,7 @@ html {
 
 body {
     background-color: #eee;
-    background-image: url("one.jpg");
+    background-image: url("../one.jpg");
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-size: cover;
@@ -92,6 +92,11 @@ table {
     border-right: 1px solid black;
     vertical-align: center;
 }
+
+#pri {
+  text-align: center;
+
+}
 td {
     
     border-right: 0px;
@@ -99,7 +104,6 @@ td {
     border-bottom: 1px solid black;
     padding-left: 1px;
     padding-right: 0px;
-    
 }
 
 
